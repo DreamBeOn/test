@@ -1,0 +1,203 @@
+﻿@model HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <form>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-5 col-lg-3">
+                <div class="card card-outline-primary">
+                    <div class="card-header p-1">
+                        Date:
+                    </div>
+                    @if (ViewData["DateRange"] != null)
+                    {
+                        <input class="form-input" type="text" id="DateRange" name="dateRange" value="@ViewData["DateRange"]" />
+                    }
+                    else
+                    {
+                        <input class="form-input" type="text" id="DateRange" name="dateRange" />
+                    }
+                    <script>
+                        $(function () {
+                            $('input[id="DateRange"]').daterangepicker({
+                                autoUpdateInput: false,
+                                locale: {
+                                    cancelLabel: 'Clear'
+                                }
+                            });
+
+                            $('input[id="DateRange"]').on('apply.daterangepicker', function (ev, picker) {
+                                $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+                            });
+
+                            $('input[id="DateRange"]').on('cancel.daterangepicker', function (ev, picker) {
+                                $(this).val('');
+                            });
+                        });
+                    </script>
+                </div>
+                <div class="card card-outline-primary">
+                    <div class="card-header p-1">
+                        Body type:
+                    </div>
+                    <div class="row">
+                        @foreach (string name in Model.BodyTypes)
+                        {
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="text-right col-3 pr-1">
+                                        @if (ViewData[name] != null && (bool)ViewData[name])
+                                        {
+                                            <input type="checkbox" name="bodyTypes" value="@name" id="@name" checked />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" name="bodyTypes" value="@name" id="@name" />
+                                        }
+                                    </div>
+                                    <div class="text-left col-9 pl-1">
+                                        <label for="@name">
+                                            @name
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="card card-outline-primary">
+                    <div class="card-header p-1">
+                        Fuel type:
+                    </div>
+                    <div class="row">
+                        @foreach (string name in Model.FuelTypes)
+                        {
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="text-right col-3 pr-1">
+                                        @if (ViewData[name] != null && (bool)ViewData[name])
+                                        {
+                                            <input type="checkbox" name="fuelTypes" value="@name" id="@name" checked />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" name="fuelTypes" value="@name" id="@name" />
+                                        }
+                                    </div>
+                                    <div class="text-left col-9 pl-1">
+                                        <label for="@name">
+                                            @name
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <div class="card card-outline-primary">
+                    <div class="card-header p-1">
+                        Transmission type:
+                    </div>
+
+                    <div class="row">
+                        @foreach (string name in Model.TransmissionTypes)
+                        {
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="text-right col-3 pr-1">
+                                        @if (ViewData[name] != null && (bool)ViewData[name])
+                                        {
+                                            <input type="checkbox" name="transmissionTypes" value="@name" id="@name" checked />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" name="transmissionTypes" value="@name" id="@name" />
+                                        }
+                                    </div>
+                                    <div class="text-left col-9 pl-1">
+                                        <label for="@name">
+                                            @name
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <div class="card card-outline-primary">
+                    <div class="card-header p-1">
+                        Body type:
+                    </div>
+                    @if (ViewData["Places"] != null)
+                    {
+                        <input type="number" class="text-center" value="@ViewData["Places"]" name="places" min="1" max="7" />
+                    }
+                    else
+                    {
+                        <input type="number" class="text-center" value="" name="places" min="1" max="7" />
+                    }
+                </div>
+                <div class="text-center" style="margin: 3px">
+                    <input type="submit" class="btn btn-success" value="Search" />
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-7 col-lg-9">
+                <div class="row">
+                    <div class="col-md-4 offset-md-5 text-right">
+                        <label for="orderBy">Order by:</label>
+                        <select class="form-control-sm" id="orderBy" name="orderBy">
+                            @if (ViewData["OrderBy"] != null && (string)ViewData["OrderBy"] == "Name")
+                            {
+                                <option value="Name" selected>Name</option>
+                            }
+                            else
+                            {
+                                <option value="Name">Name</option>
+                            }
+                            @if (ViewData["OrderBy"] != null && (string)ViewData["OrderBy"] == "Price")
+                            {
+                                <option selected value="Price">Price</option>
+                            }
+                            else
+                            {
+                                <option value="Price">Price</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        @if (ViewData["Descending"] != null && (bool)ViewData["Descending"])
+                        {
+                            <input type="checkbox" name="descending" id="descending" value="true" checked />
+                        }
+                        else
+                        {
+                            <input type="checkbox" name="descending" id="descending" value="true" />
+                        }
+                        <label for="descending">Descending</label>
+                    </div>
+                    <script>
+                        $("#orderBy").on("change", function () {
+                            document.forms[0].submit();
+                            return false;
+                        });
+                        $("#descending").on("change", function () {
+                            document.forms[0].submit();
+                            return false;
+                        });
+                    </script>
+                </div>
+                <div class="row">
+                    @foreach (var v in Model.Vehicles)
+                    {
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                            @Html.Partial("VehicleView", v)
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </form>

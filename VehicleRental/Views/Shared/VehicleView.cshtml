@@ -1,0 +1,32 @@
+﻿@model Vehicle
+
+
+<div class="card card-outline-primary m-1 p-1">
+    <div class="bg-faded p-1">
+        <h5 class="card-title">
+            @Model.ModelName
+        </h5>
+        @if (Model.Image == null)
+        {
+            <img src="~/images/car.png" width="100%" height="auto" style="margin: 5px" />
+        }
+        <div class="row no-gutters">
+            <div class="col-8">
+            <h6 class="card-subtitle mb-2 text-muted">@Model.BodyType</h6>
+       </div>
+        <div class="col-4">
+            <span class="badge badge-pill badge-primary">
+                @string.Format("{0,5:N1}$", Model.PricePerDay)/day
+            </span>
+        </div>
+        </div>
+        <div class="row no-gutters">
+        <div class="col-4">
+            Engine:
+        </div>
+        <div class="col-8">
+            @Model.FuelType @Model.EngineVolume
+        </div>
+    </div>
+    </div>
+</div>

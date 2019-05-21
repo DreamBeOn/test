@@ -1,0 +1,96 @@
+﻿@model Vehicle
+
+
+<div class="card card-outline-primary m-1 p-1">
+    <div class="bg-faded p-1">
+        <h4>
+            @Model.ModelName
+        </h4>
+        <div class="row">
+            <div class="col-3">
+                @if (Model.Image == null)
+                {
+                    <img src="~/images/notfound.jpg" width="100%" height="auto" style="margin: 5px" />
+                }
+            </div>
+            <div class="col-9">
+                <h5>@Model.BodyType</h5>
+                <div class="row no-gutters">
+                    <div class="col-4">
+                        <div class="row no-gutters">
+                            <div class="col-4">
+                                Engine:
+                            </div>
+                            <div class="col-8">
+                                <select class="form-control-sm" id="exampleFormControlSelect1">
+                                    <option>@Model.FuelType</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                                @Model.FuelType @Model.EngineVolume
+                            </div>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-4">
+                                Places:
+                            </div>
+                            <div class="col-8">
+                                @Model.PassangersCount
+                            </div>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-4">
+                                Drive:
+                            </div>
+                            <div class="col-8">
+                                @Model.Drive
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="row no-gutters">
+                            <div class="col-8">
+                                Fuel consumption:
+                            </div>
+                            <div class="col-4">
+                                @Model.FuelConsuptionPer100km
+                            </div>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-8">
+                                Transmission:
+                            </div>
+                            <div class="col-4">
+                                @Model.TransmissionType
+                            </div>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-8">
+                                Air conditioner:
+                            </div>
+                            <div class="col-4">
+                                @if (Model.AirCondition != null && Model.AirCondition == true)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>No</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-center" style="margin: 3px">
+                            <button type="button" class="btn btn-outline-success">Save</button>
+                            <br />
+                            <a href="#" align="center">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,487 @@
+﻿@model HomeViewModel
+
+
+<form>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-5 col-lg-3">
+            <div class="card card-outline-primary">
+                <div class="card-header p-1">
+                    Model name contains:
+                </div>
+                @if (ViewData["ModelName"] != null)
+                {
+                    <input class="form-input" type="text" id="modelName" name="modelName" value="@ViewData["ModelName"]" />
+                }
+                else
+                {
+                    <input class="form-input" type="text" id="modelName" name="modelName" />
+                }
+            </div>
+            <div class="card card-outline-primary">
+                <div class="card-header p-1">
+                    Body type:
+                </div>
+                <div class="row">
+                    @foreach (string name in Model.BodyTypes)
+                    {
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="text-right col-3 pr-1">
+                                    @if (ViewData[name] != null && (bool)ViewData[name])
+                                    {
+                                        <input type="checkbox" name="bodyTypes" value="@name" id="@name" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="bodyTypes" value="@name" id="@name" />
+                                    }
+                                </div>
+                                <div class="text-left col-9 pl-1">
+                                    <label for="@name">
+                                        @name
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="card card-outline-primary">
+                <div class="card-header p-1">
+                    Fuel type:
+                </div>
+                <div class="row">
+                    @foreach (string name in Model.FuelTypes)
+                    {
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="text-right col-3 pr-1">
+                                    @if (ViewData[name] != null && (bool)ViewData[name])
+                                    {
+                                        <input type="checkbox" name="fuelTypes" value="@name" id="@name" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="fuelTypes" value="@name" id="@name" />
+                                    }
+                                </div>
+                                <div class="text-left col-9 pl-1">
+                                    <label for="@name">
+                                        @name
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <div class="card card-outline-primary">
+                <div class="card-header p-1">
+                    Transmission type:
+                </div>
+                <div class="row">
+                    @foreach (string name in Model.TransmissionTypes)
+                    {
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="text-right col-3 pr-1">
+                                    @if (ViewData[name] != null && (bool)ViewData[name])
+                                    {
+                                        <input type="checkbox" name="transmissionTypes" value="@name" id="@name" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="transmissionTypes" value="@name" id="@name" />
+                                    }
+                                </div>
+                                <div class="text-left col-9 pl-1">
+                                    <label for="@name">
+                                        @name
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <div class="card card-outline-primary">
+                <div class="card-header p-1">
+                    Body type:
+                </div>
+                @if (ViewData["Places"] != null)
+                {
+                    <input type="number" class="text-center" value="@ViewData["Places"]" name="places" min="1" max="7" />
+                }
+                else
+                {
+                    <input type="number" class="text-center" value="" name="places" min="1" max="7" />
+                }
+            </div>
+            <div class="text-center" style="margin: 3px">
+                <input type="submit" class="btn btn-success" value="Search" />
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-7 col-lg-9">
+            <div class="row">
+                <div class="col-md-5">
+                    
+                </div>
+                <div class="col-md-4 text-right">
+                    <label for="orderBy">Order by:</label>
+                    <select class="form-control-sm" id="orderBy" name="orderBy">
+                        @if (ViewData["OrderBy"] != null && (string)ViewData["OrderBy"] == "Name")
+                        {
+                            <option value="Name" selected>Name</option>
+                        }
+                        else
+                        {
+                            <option value="Name">Name</option>
+                        }
+                        @if (ViewData["OrderBy"] != null && (string)ViewData["OrderBy"] == "Price")
+                        {
+                            <option selected value="Price">Price</option>
+                        }
+                        else
+                        {
+                            <option value="Price">Price</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    @if (ViewData["Descending"] != null && (bool)ViewData["Descending"])
+                    {
+                        <input type="checkbox" name="descending" id="descending" value="true" checked />
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="descending" id="descending" value="true" />
+                    }
+                    <label for="descending">Descending</label>
+                    
+                    <input type="submit" class="btn btn-outline-success" value="ADD" name="ADD" />
+                </div>
+                <script>
+                    $("#orderBy").on("change", function () {
+                        document.forms[0].submit();
+                        return false;
+                    });
+                    $("#descending").on("change", function () {
+                        document.forms[0].submit();
+                        return false;
+                    });
+                </script>
+            </div>
+            @if (ViewData["IsAddPresed"] != null && (bool)ViewData["IsAddPresed"])
+            {
+                <div class="card card-outline-primary border-success m-1 p-1">
+                    <div class="bg-faded p-1">
+                        <div class="row">
+                            <div class="col-3">
+                                <img src="~/images/notfound.jpg" width="100%" height="auto" />
+                                <input type="file" name="newImage" class="small" />
+                            </div>
+                            <div class="col-6">
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Model name:
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" name="modelName" class="small" style="width: 100%" />
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Body type:
+                                    </div>
+                                    <div class="col-6">
+                                        <select name="bodyType" class="small" style="width: 100%">
+                                            @foreach (string t in Model.BodyTypes)
+                                            {
+                                                    <option value="@t">@t</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Fuel type:
+                                    </div>
+                                    <div class="col-6">
+                                        <select name="fuelType" class="small" style="width: 100%">
+                                            @foreach (string t in Model.FuelTypes)
+                                            {
+                                                    <option value="@t">@t</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Transmission type:
+                                    </div>
+                                    <div class="col-6">
+                                        <select name="transmissionType" class="small" style="width: 100%">
+                                            @foreach (string t in Model.TransmissionTypes)
+                                            {
+                                                    <option value="@t">@t</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Places:
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" name="places" class="small" style="width: 100%" min="1" max="7" step="1" />
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Air condition:
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="checkbox" value="true" name="airCondition" />
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Engine volume:
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" name="engineVolume" class="small" style="width: 100%" min="0" max="50" step="0.1" />
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Fuel/100km:
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" name="fuelConsumptionPer100km" class="small" style="width: 100%" min="0" max="50" step="0.1" />
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Drive:
+                                    </div>
+                                    <div class="col-6">
+                                        <select name="drive" class="small" style="width: 100%">
+                                            @foreach (string t in Model.Drives)
+                                            {
+                                                <option value="@t">@t</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Price per day:
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" name="pricePerDay" class="small" min="0" step="0.01" style="width: 100%" />
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Deposit:
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" name="deposit" class="small" min="0" step="0.01" style="width: 100%" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 text-center">
+                                <div class="row">
+                                    <div class="col text-right">
+                                        <input type="submit" class="btn btn-outline-danger align-top" name="btnADD" value="X" />
+                                    </div>
+                                </div>
+                                <div class="d-flex align-content-center p-2">
+                                    <input type="submit" class="btn btn-outline-success align-top" name="btnADD" value="ADD" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+            @foreach (var v in Model.Vehicles)
+            {
+                <div class="card card-outline-primary m-1 p-1">
+                    <div class="bg-faded p-1">
+                        <div class="row">
+                            <div class="col-3">
+                                @if (v.Image == null)
+                                {
+                                    <img src="~/images/notfound.jpg" width="100%" height="auto" />
+                                }
+                                <input type="file" name="newImage" class="small" />
+                            </div>
+                            <div class="col-6">
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Model name:
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" name="modelName" class="small" value="@v.ModelName" style="width: 100%" />
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Body type:
+                                    </div>
+                                    <div class="col-6">
+                                        <select name="bodyType" class="small" style="width: 100%">
+                                            @foreach (string t in Model.BodyTypes)
+                                            {
+                                                if (t == v.BodyType)
+                                                {
+                                                    <option value="@t" selected>@t</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@t">@t</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Fuel type:
+                                    </div>
+                                    <div class="col-6">
+                                        <select name="fuelType" class="small" style="width: 100%">
+                                            @foreach (string t in Model.FuelTypes)
+                                            {
+                                                if (t == v.FuelType)
+                                                {
+                                                    <option value="@t" selected>@t</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@t">@t</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Transmission type:
+                                    </div>
+                                    <div class="col-6">
+                                        <select name="transmissionType" class="small" style="width: 100%">
+                                            @foreach (string t in Model.TransmissionTypes)
+                                            {
+                                                if (t == v.TransmissionType)
+                                                {
+                                                    <option value="@t" selected>@t</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@t">@t</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Places:
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" name="places" value="@v.PassangersCount" class="small" style="width: 100%" min="1" max="7" step="1" />
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Air condition:
+                                    </div>
+                                    <div class="col-6">
+                                        @if (v.AirCondition != null && (bool)v.AirCondition)
+                                        {
+                                            <input type="checkbox" value="true" name="airCondition" checked />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" value="true" name="airCondition" />
+                                        }
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Engine volume:
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" name="engineVolume" value="@v.EngineVolume" class="small" style="width: 100%" min="0" max="50" step="0.1" />
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Fuel/100km:
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" name="fuelConsumptionPer100km" value="@v.FuelConsuptionPer100km" class="small" style="width: 100%" min="0" max="50" step="0.1" />
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Drive:
+                                    </div>
+                                    <div class="col-6">
+                                        <select name="drive" class="small" style="width: 100%">
+                                            @foreach (string t in Model.Drives)
+                                            {
+                                                if (t == v.Drive)
+                                                {
+                                                    <option value="@t" selected>@t</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@t">@t</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Price per day:
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" name="pricePerDay" class="small" min="0" step="0.01" style="width: 100%" value="@((double)v.PricePerDay)" />
+                                    </div>
+                                </div>
+                                <div class="row no-gutters m-1">
+                                    <div class="col-6">
+                                        Deposit:
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" name="deposit" class="small" min="0" step="0.01" style="width: 100%" value="@((double)v.Deposit)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 text-center">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <input type="submit" class="btn btn-outline-success align-top" name="save" value="Save" />
+                                    </div>
+                                </div>
+                                <div class="row align-items-end">
+                                    <div class="col">
+                                        <input type="submit" class="btn btn-outline-danger align-bottom" name="delete" value="Delete" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            }
+        </div>
+    </div>
+</form>
